@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts-config PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 1.4//EN"
+    "https://struts.apache.org/dtds/struts-config_1_4.dtd">
+<struts-config>
+    <form-beans>
+        <form-bean name="user" type="model.User" />
+        <form-bean name="loginForm" type="model.LoginForm" />
+    </form-beans>
+    <global-exceptions>
+        <exception type="java.lang.Exception" path="/error.jsp"
+            key="error.message" handler="utils.MyExceptionHandler"></exception>
+    </global-exceptions>
+
+    <action-mappings>
+        <action path="/login" type="action.LoginAction"
+            name="loginForm" scope="request" validate="true" input="/login.jsp">
+            <forward name="success" path="/list-user.html"
+                redirect="true" />
+            <forward name="failure" path="/login.jsp" />
+        </action>
+        <action path="/logout" type="action.LogoutAction"
+            scope="request">
+            <forward name="logout" path="/login.jsp" />
+        </action>
+        <action path="/add-user"
+            type="org.apache.struts.actions.ForwardAction"
+            parameter="/user/addUser.jsp">
+        </action>
+        <action path="/add-user-post" type="action.UserAction"
+            name="user" parameter="addUserPost" validate="true"
+            input="/user/addUser.jsp">
+            <forward name="success" path="/list-user.html"
+                redirect="true" />
+        </action>
+        <action path="/delete-user" type="action.UserAction"
+            parameter="deleteUser">
+            <forward name="success" path="/list-user.html"
+                redirect="true" />
+        </action>
+        <action path="/edit-user" type="action.UserAction"
+            parameter="editUser">
+            <forward name="editUser" path="/user/editUser.jsp" />
+        </action>
+        <action path="/edit-user-post" type="action.UserAction"
+            name="user" parameter="editUserPost" validate="true"
+            input="/user/editUser.jsp">
+            <forward name="success" path="/list-user.html"
+                redirect="true" />
+        </action>
+        <action path="/download" type="action.UserAction"
+            parameter="downloadFile">
+        </action>
+        <action path="/view-user" type="action.UserAction"
+            parameter="viewUser">
+            <forward name="viewUser" path="/user/viewUser.jsp" />
+        </action>
+        <action path="/list-user" type="action.UserAction"
+            parameter="listUser">
+            <forward name="listUser" path="/user/listUser.jsp" />
+        </action>
+        <action path="/language" type="action.LanguageSelectAction"
+            parameter="la">
+            <forward name="success" path="/list-user.html" />
+        </action>
+        
+    </action-mappings>
+    <message-resources parameter="messages"></message-resources>
+</struts-config>
